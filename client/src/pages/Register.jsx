@@ -83,7 +83,18 @@ export function Register() {
         e.preventDefault();
         
         if (usernameValid && emailValid && passValid && repassValid) {
-            fetch('');
+            fetch('http://localhost:3001/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    password: pass,
+                }),
+            }).then(res => res.json())
+              .then(console.log);
         }
     }
     
@@ -119,7 +130,7 @@ export function Register() {
 
                 <div className="form-check text-start my-3">
                     <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" />
-                    <label className="form-check-label" for="flexCheckDefault">
+                    <label className="form-check-label" htmlFor="flexCheckDefault">
                         Agree to <Link to='/'>Terms of service</Link>
                     </label>
                 </div>

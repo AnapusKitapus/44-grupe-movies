@@ -9,16 +9,16 @@ export function Login() {
 
                 <div className="form-floating mb-3">
                     <input type="email" className="form-control" id="email" />
-                    <label for="email">Email address</label>
+                    <label htmlFor="email">Email address</label>
                 </div>
                 <div className="form-floating mb-3">
                     <input type="password" className="form-control" id="password" />
-                    <label for="password">Password</label>
+                    <label htmlFor="password">Password</label>
                 </div>
                 
                 <div className="form-check text-start my-3">
                     <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" />
-                    <label className="form-check-label" for="flexCheckDefault">
+                    <label className="form-check-label" htmlFor="flexCheckDefault">
                         Remember me
                     </label>
                 </div>

@@ -1,8 +1,20 @@
 import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import bodyParser from 'body-parser';
 import { api } from './api/api.js';
 
 const PORT = 3001;
 const app = express();
+
+const corsOptions = {
+    origin: '*',
+};
+
+app.use(cors(corsOptions));
+app.use(helmet());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
     return res.send('HOME PAGE');
