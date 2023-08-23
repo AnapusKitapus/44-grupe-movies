@@ -43,7 +43,15 @@ register.post('/', async (req, res) => {
         const [selectRes] = await connection.execute(selectQuery, [email]);
 
         if (selectRes.length > 0) {
-            return res.status(200).json({ msg: 'User with such email already exist.' });
+            return res.status(200).json({ 
+                status: 'err-lisy',
+                errors: [
+                    {
+                        input: 'email',
+                        msg: 'User with such email already exist.'
+                    }
+                ]
+            });
         }
 
         const insertQuery = `INSERT INTO users 
