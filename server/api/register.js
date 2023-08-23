@@ -44,7 +44,7 @@ register.post('/', async (req, res) => {
 
         if (selectRes.length > 0) {
             return res.status(200).json({ 
-                status: 'err-lisy',
+                status: 'err-list',
                 errors: [
                     {
                         input: 'email',
