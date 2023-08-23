@@ -96,8 +96,9 @@ export function Register() {
                 }),
             }).then(res => res.json())
                 .then(data => {
+                    console.log(data);
                     if (data.status === 'err-list') {
-                        for (const item of data) {
+                        for (const item in data) {
                             if (item.input === 'username') {
                                 setUsernameErr(item.msg);
                             }
