@@ -6,17 +6,22 @@ export function Login() {
 
     const [email, setEmail] = useState('');
     const [emailErr, setEmailErr] = useState('');
+    const [emailValid, setEmailValid] = useState(false);
     const [pass, setPass] = useState('');
     const [passErr, setPassErr] = useState('');
+    const [passValid, setPassValid] = useState(false);
 
     function isValidEmail(e) {
         const { value } = e.target;
         const minSize = 6;
 
         if (value.length < minSize) {
-            return setEmailErr(`Email per trumpas. Minimum ${minSize} simboliu.`);
+            setEmailErr(`Email per trumpas. Minimum ${minSize} simboliu.`);
+            setEmailValid(false);
+        } else {
+            setEmailErr(false);
+            setEmailValid(true);
         }
-        return setEmailErr('');
     }
 
     function isValidPass(e) {
@@ -24,27 +29,32 @@ export function Login() {
         const minSize = 6;
 
         if (value.length < minSize) {
-            return setPassErr(`Pass per trumpas. Minimum ${minSize} simboliu.`);
+            setPassErr(`Email per trumpas. Minimum ${minSize} simboliu.`);
+            setPassValid(false);
+        } else {
+            setPassErr(false);
+            setPassValid(true);
         }
-        return setPassErr('');
     }
 
     function handleSubmit(e) {
         e.preventDefault();
-        
-        fetch('http://localhost:3001/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({
-                email,
-                password: pass,
-            }),
-        }).then(res => res.json())
-            .then(console.log)
+
+        if (emailValid && passValid) {
+            fetch('http://localhost:3001/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    password: pass,
+                }),
+            }).then(res => res.json())
+                .then(console.log)
             .catch(err => console.error(err));
+        }
     }
 
     return (
@@ -55,14 +65,14 @@ export function Login() {
                 <div className="form-floating mb-3">
                     <input onChange={e => setEmail(e.target.value)} onBlur={isValidEmail}
                        type="email" id="email" value={email}
-                       className={`form-control ${emailErr ? 'is-invalid' : ''}`} />
+                       className={`form-control ${emailErr ? 'is-invalid' : ''} ${emailValid ? 'is-valid' : ''}`} />
                     <label htmlFor="email">Email address</label>
                     <div className="invalid-feedback">{emailErr}</div>
                 </div>
                 <div className="form-floating mb-3">
                     <input onChange={e => setPass(e.target.value)} onBlur={isValidPass}
                         type="password" id="password" value={pass}
-                        className={`form-control ${passErr ? 'is-invalid' : ''}`} />
+                        className={`form-control ${passErr ? 'is-invalid' : ''} ${passValid ? 'is-valid' : ''}`} />
                     <label htmlFor="password">Password</label>
                     <div className="invalid-feedback">{passErr}</div>
                 </div>
