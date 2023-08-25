@@ -35,7 +35,7 @@ login.post('/', async (req, res) => {
     try {
         const selectQuery = `SELECT * FROM users WHERE email = ? AND password = ?;`;
         const [selectRes] = await connection.execute(selectQuery, [email, password]);
-
+        
         if (selectRes.length !== 1) {
             return res.status(200).json({ msg: 'Login credentials does not match.' });
         }
