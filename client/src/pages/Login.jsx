@@ -3,7 +3,7 @@ import style from './Auth.module.css';
 import { useState } from 'react'; 
 
 export function Login() {
-
+    const [formErr, setFormErr] = useState('');
     const [email, setEmail] = useState('');
     const [emailErr, setEmailErr] = useState('');
     const [emailValid, setEmailValid] = useState(false);
@@ -52,7 +52,11 @@ export function Login() {
                     password: pass,
                 }),
             }).then(res => res.json())
-                .then(console.log)
+                .then(data => {
+                    if (data.status === 'err') {
+                        setFormErr(data.msg);
+                    }
+                })
             .catch(err => console.error(err));
         }
     }
@@ -61,6 +65,15 @@ export function Login() {
         <div className={`form-signin w-100 m-auto ${style.formSignIn}`}>
             <form onSubmit={handleSubmit}>
                 <h1 className="h1 mb-3 fw-normal">Please sign in</h1>
+
+                {
+                    formErr && (
+                        <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                            {formErr}
+                            <button onClick={() => setFormErr('')} type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    )
+                }
 
                 <div className="form-floating mb-3">
                     <input onChange={e => setEmail(e.target.value)} onBlur={isValidEmail}
