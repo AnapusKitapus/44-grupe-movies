@@ -1,5 +1,7 @@
+import { randomUUID } from 'crypto';
 import express from 'express';
 import { connection } from '../lib/db.js';
+import { log } from 'console';
 
 const login = express.Router();
 
@@ -27,7 +29,10 @@ login.post('/', async (req, res) => {
     }
 
     if (errors.length > 0) {
-        return res.status(409).json({ status: 'err-list', errors });
+        return res.status(409).json({ 
+            status: 'err-list', 
+            errors 
+        });
     }
 
     console.log(req.body);
@@ -37,14 +42,46 @@ login.post('/', async (req, res) => {
         const [selectRes] = await connection.execute(selectQuery, [email, password]);
         
         if (selectRes.length !== 1) {
-            return res.status(200).json({ status: 'err', msg: 'Login credentials does not match.' });
+            return res.status(200).json({ 
+                status: 'err', 
+                msg: 'Login credentials does not match.' 
+            });
         }
 
-        return res.status(200).json({ status: 'ok', msg: 'Successs.' });
+        const token = randomUUID();
+        const insertQuery = `INSERT INTO tokens 
+                            (token, userId) 
+                        VALUES 
+                            (?, ?);`;
+        const [insertRes] = await connection.execute(insertQuery, [token, selectRes[0].id]);
+
+        if (insertRes.affectedRows !== 1) {
+            return res.status(500).json({ 
+                status: 'err', 
+                msg: 'Server error.' 
+            });
+        }
+
+        return res.status(200).set({
+            'Set-Cookie': [
+                'moviesToken=' + token,
+                'path=/',
+                'domain=localhost',
+                'max-age=86400',
+                // 'Secure',
+                'SameSite=Lax',
+                'HttpOnly',
+            ].join('; '),
+        }).json({
+            status: 'ok',
+            msg: 'Login success',
+        });
     } catch (error) {
-        return res.status(500).json({ status: 'err', msg: 'Server error.' });
-    }
-    
+        return res.status(500).json({ 
+            status: 'err', 
+            msg: 'Server error.' 
+        });
+    }  
 });
 
 export { login };

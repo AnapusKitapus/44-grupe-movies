@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import style from './Auth.module.css';
 import { useState } from 'react'; 
 
 export function Login() {
+    const navigate = useNavigate();
     const [formErr, setFormErr] = useState('');
     const [email, setEmail] = useState('');
     const [emailErr, setEmailErr] = useState('');
@@ -47,6 +48,7 @@ export function Login() {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     email,
                     password: pass,
@@ -56,8 +58,11 @@ export function Login() {
                     if (data.status === 'err') {
                         setFormErr(data.msg);
                     }
+                    if (data.status === 'ok') {
+                        navigate('/dashboard');
+                    }
                 })
-            .catch(err => console.error(err));
+                .catch(err => console.error(err));
         }
     }
 
