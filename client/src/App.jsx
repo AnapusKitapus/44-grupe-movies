@@ -7,10 +7,12 @@ import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 import { UserLayout } from './layout/UserLayout';
 import { Movies } from './pages/Movies';
+import { UserContextProvider } from './context/UserContext';
 
 function App() {
   return (
-    <BrowserRouter>
+    <UserContextProvider>
+      <BrowserRouter>
       <Routes>
         <Route Component={BasicLayout}>
           <Route index path='/' element={<Home />} />
@@ -24,7 +26,8 @@ function App() {
           <Route path='/movies' element={<Movies />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    </UserContextProvider>
   );
 }
 

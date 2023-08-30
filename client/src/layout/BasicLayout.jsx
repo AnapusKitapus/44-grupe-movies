@@ -5,7 +5,7 @@ import { Footer } from '../components/Footer.jsx'
 export function BasicLayout() {
     return (
         <div>
-            <Header />
+            <Header loggedIn={true} />
             <main>
                 <Outlet />
             </main>
