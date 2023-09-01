@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 
 export function Header() {
     const ctx = useContext(UserContext);
-    console.log(ctx);
-
     const userLoggedIn = ctx.user.loggedIn;
+    const [menuVisibility, setMenuVisibility] = useState(false);
 
     const publicMenu = (
         <div className="col-md-3 text-end">
@@ -16,18 +15,27 @@ export function Header() {
     );
 
     const userMenu = (
-      <div className="col-md-3 text-end">
-          <Link to="/" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" className="rounded-circle" />
-          </Link>
-          <ul className="dropdown-menu text-small">
-              <li><Link className="dropdown-item" to="/">New project...</Link></li>
-              <li><Link className="dropdown-item" to="/">Settings</Link></li>
-              <li><Link className="dropdown-item" to="/">Profile</Link></li>
-              <li><hr className="dropdown-divider" /></li>
-              <li><Link className="dropdown-item" to="/">Sign out</Link></li>
-          </ul>
-      </div>
+        <div className="col-md-3 dropdown text-end">
+            <div onClick={() => setMenuVisibility(!menuVisibility)} className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" className="rounded-circle" />
+            </div>
+            <ul className={`dropdown-menu text-small ${menuVisibility ? 'show' : ''}`}
+                style= {{
+                  position: 'absolute',
+                  inset: '0px 0px auto auto',
+                  margin: '0px',
+                  transform: 'translate3d(0px, 34.4px, 0px)',
+                }}>
+                <li><Link className="dropdown-item" to="/dashboard">Dashboard</Link></li>
+                <li><Link className="dropdown-item" to="/movies">Movies</Link></li>
+                <li><Link className="dropdown-item" to="/movies/add">New movie</Link></li>
+                <li><hr className="dropdown-divider" /></li>
+                <li><Link className="dropdown-item" to="/settings">Settings</Link></li>
+                <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
+                <li><hr className="dropdown-divider" /></li>
+                <li><Link className="dropdown-item" to="/logout">Sign out</Link></li>
+            </ul>
+        </div>
     );
  
     return (
