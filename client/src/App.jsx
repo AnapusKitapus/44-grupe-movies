@@ -8,10 +8,12 @@ import { Dashboard } from './pages/Dashboard';
 import { UserLayout } from './layout/UserLayout';
 import { Movies } from './pages/Movies';
 import { UserContextProvider } from './context/UserContext';
+import { UserContextValuesUpdate } from './context/UserContextValuesUpdate';
 
 function App() {
   return (
     <UserContextProvider>
+      <UserContextValuesUpdate>
       <BrowserRouter>
       <Routes>
         <Route Component={BasicLayout}>
@@ -27,6 +29,7 @@ function App() {
         </Route>
       </Routes>
       </BrowserRouter>
+      </UserContextValuesUpdate>
     </UserContextProvider>
   );
 }

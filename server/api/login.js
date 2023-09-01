@@ -1,12 +1,25 @@
 import { randomUUID } from 'crypto';
 import express from 'express';
 import { connection } from '../lib/db.js';
-import { log } from 'console';
 
 const login = express.Router();
 
 login.get('/', (req, res) => {
-    return res.json({msg: 'GET: LOGIN API'});
+    const { moviesToken } = req.cookies;
+    
+    if (!moviesToken) {
+        return res.json({ msg: 'User is not logged in' });
+    }
+
+    try {
+
+    // kreipiames i DB, gauti info apie "moviesToken"
+        return res.sendStatus(400);
+    } catch (error) {    
+        return res.status(500).json({msg: 'Server error' });
+    }
+
+    return res.sendStatus(200);
 });
 
 login.post('/', async (req, res) => {
