@@ -11,7 +11,6 @@ export function UserContextValues() {
     const [movies, setMovies] = useState(initialMovies);
     
     function loginUser() {
-        console.log('loggin in...');
         setUser(prev => ({ ...prev, loggedIn: true }));
     }
 

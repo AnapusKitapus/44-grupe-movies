@@ -4,22 +4,34 @@ import { connection } from '../lib/db.js';
 
 const login = express.Router();
 
-login.get('/', (req, res) => {
+login.get('/', async (req, res) => {
     const { moviesToken } = req.cookies;
     
     if (!moviesToken) {
-        return res.json({ msg: 'User is not logged in' });
+        return res.sendStatus(400);
     }
 
     try {
+        const selectQuery = `SELECT * FROM tokens WHERE token=?`;
+        const [selectRes] = await connection.execute(selectQuery, [moviesToken]);
+        const [token] = selectRes;
 
-    // kreipiames i DB, gauti info apie "moviesToken"
+        if (selectRes.length === 1) {
+            const cookieExpirationInDays = 1;
+            const createDate = new Date(token.created);
+            const now = new Date();
+            const daysDiff = (now - createDate) / 1000 / 86400;
+            if (daysDiff > cookieExpirationInDays) {
+                return res.sendStatus(400);
+            }
+
+            return res.sendStatus(200);
+        }
+
         return res.sendStatus(400);
     } catch (error) {    
         return res.status(500).json({msg: 'Server error' });
     }
-
-    return res.sendStatus(200);
 });
 
 login.post('/', async (req, res) => {

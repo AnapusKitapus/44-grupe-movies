@@ -5,13 +5,15 @@ export function UserContextValuesUpdate(props) {
     const ctx = useContext(UserContext);
     
     useEffect(() => {
-        console.log('bandymas suzinoti ar esu prisijunges...');
-
         fetch('http://localhost:3001/api/login', {
             method: 'GET',
             credentials: 'include',
         })
-            .then(res => res.json())
+            .then(res => {
+                if (res.ok) {
+                    ctx.loginUser();
+                }
+            })
             .catch(err => console.error(err));
     }, []);
 

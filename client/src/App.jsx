@@ -9,6 +9,7 @@ import { UserLayout } from './layout/UserLayout';
 import { Movies } from './pages/Movies';
 import { UserContextProvider } from './context/UserContext';
 import { UserContextValuesUpdate } from './context/UserContextValuesUpdate';
+import { AddMovie } from './pages/AddMovie';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route Component={UserLayout}>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/movies' element={<Movies />} />
+          <Route path='/movies/add' element={<AddMovie />} />
         </Route>
       </Routes>
       </BrowserRouter>
