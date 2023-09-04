@@ -102,7 +102,7 @@ export function AddMovie() {
           <div className="my-3">
             <div className="form-check">
               <input id="credit" name="paymentMethod" type="radio" className="form-check-input" checked="" required="" />
-              <label className="form-check-label" for="credit">Credit card</label>
+              <label className="form-check-label" htmlFor="credit">Credit card</label>
             </div>
             <div className="form-check">
               <input id="debit" name="paymentMethod" type="radio" className="form-check-input" required="" />
@@ -140,10 +140,10 @@ export function AddMovie() {
               </div>
             </div>
 
-            <div class="col-md-3">
+            <div className="col-md-3">
               <label htmlFor="cc-cvv" class="form-label">CVV</label>
-              <input type="text" class="form-control" id="cc-cvv" placeholder="" required="" />
-              <div class="invalid-feedback">
+              <input type="text" className="form-control" id="cc-cvv" placeholder="" required="" />
+              <div className="invalid-feedback">
                 Security code required
               </div>
             </div>
