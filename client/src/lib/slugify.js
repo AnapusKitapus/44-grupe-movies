@@ -1,4 +1,19 @@
 /*
+www/movies
+www/movies/add -> FORMA
+www/movies/filmo-pavadinimas -> ATSKIRAS PSL
+www/movies/kobra-11 -> ATSKIRAS PSL
+www/movies/Labai-ilgas-filmo-pavadinimas-is-Miesto -> ATSKIRAS PSL
+www/movies/labai-ilgas-filmo-pavadinimas-is-miesto -> 
+
+TRANSFORMACIJOS:
+
+Pavadinimas -> pavadinimas
+Filmo pavadinimas -> filmo-pavadinimas
+Filmas 777 -> filmas-777
+Labas rytas Maryte! -> labas-rytas-Maryte
+Ąčių tau ūž tavo meilė -> aciu-tau-uz-tavo-meile
+
 1. daug zodziu sujungiam su "-" (minusu)
 2. didziosios/mazosios raides - nesvarbu, todel suvienodiname i mazasias
 3. ne anglu kalbos abeceles raides keiciamos i ju artimiausia atitikmeni

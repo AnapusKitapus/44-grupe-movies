@@ -10,11 +10,30 @@ export function AddMovie() {
     setSlug(slugify(e.target.value));
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    fetch('http://localhost:3001/api/movies', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            name, slug,
+        }),
+    })
+        .then(res => res.json())
+        .then(console.log)
+        .catch(err => console.error(err));
+  }
+
   return (
   <>
       <h1 className="h1 mt-3 mb-5 pb-2 border-bottom">Add movie</h1>
       <div className="col-md-7 col-lg-8">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="row g-3">
             <div className="col-12">
               <label htmlFor="movieName" className="form-label">Movie name</label>
@@ -28,7 +47,8 @@ export function AddMovie() {
               <label htmlFor="slug" className="form-label">Slug</label>
               <div className="input-group has-validation">
                 <span className="input-group-text">@</span>
-                <input defaultValue={slug} type="text" className="form-control" id="slug" placeholder="Slug" required />
+                <input defaultValue={slug} type="text" className="form-control" id="slug" 
+                    placeholder="Slug" disabled />
                 <div className="invalid-feedback">
                   Slug is required.
                 </div>

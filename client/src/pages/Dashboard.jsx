@@ -2,8 +2,8 @@ export function Dashboard() {
     return (
         <>
             <h2 className='pt-3'>Movies</h2>
-            <div className="table-responsive small">
-                            <table className="table table-striped table-sm">
+            <div className="table-responsive">
+                            <table className="table table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>

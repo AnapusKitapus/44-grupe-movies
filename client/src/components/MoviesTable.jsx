@@ -7,21 +7,21 @@ export function MoviesTable({ movies }) {
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
+                    <th scope="col">Movie name</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {
                     movies.map((movie, idx) => (
                         <tr key={idx}>
-                            <td>1,001</td>
-                            <td>random</td>
-                            <td>data</td>
-                            <td>placeholder</td>
-                            <td>text</td>
+                            <td>{idx + 1}</td>
+                            <td>{movie.name}</td>
+                            <td>
+                                <button className='btn btn-primary'>WIEW</button>
+                                <button className='btn btn-primary'>EDIT</button>
+                                <button className='btn btn-primary'>DELETE</button>
+                            </td>
                         </tr>
                     ))
                 }
