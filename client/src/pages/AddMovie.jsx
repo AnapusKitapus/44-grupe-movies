@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { slugify } from "../lib/slugify";
-import preview from '../assets/preview.png';
+import defaultPreview from '../assets/preview.png';
 
 export function AddMovie() {
   const [name, setName] = useState('');
@@ -36,7 +36,15 @@ export function AddMovie() {
   }
 
   function updateImage(e) {
-    setImage(e.target.value);
+    const formData = new FormData();
+    formData.append('image_file', e.target.files[0]);
+
+    fetch('http://localhost:3001/api/upload', {
+      method: 'POST',
+      body: formData,
+    }).then(res => res.json())
+      .then(data => setImage(`http://localhost:3001/images/${data.path}`))
+      .catch(err => console.error(err));
   }
 
   function updateImageAlt(e) {
@@ -133,14 +141,13 @@ export function AddMovie() {
 
             <div className="col-12">
               <div className="row g-3">
-                <div className="col-2">
-                  <img src={preview} alt="Preview" style={{height: 80, width: 80, objectFit: 'contain',}} 
+                <div className="col-3">
+                  <img src={image ? image : defaultPreview} alt="Preview" style={{height: 80, width: 80, objectFit: 'contain',}} 
                     className="me-5" />
                 </div>
-                <div className="col-10">
+                <div className="col-9">
                   <label className="form-label" htmlFor="coverImage">Upload cover image</label>
-                  <input onChange={updateImage} value={image} type="file" 
-                    className="form-control" id="coverImage" />
+                  <input onChange={updateImage} type="file" className="form-control" id="coverImage" />
                   <div className="invalid-feedback">
                     Valid Cover image is required.
                   </div>

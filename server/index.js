@@ -12,12 +12,17 @@ const corsOptions = {
     origin: 'http://localhost:3000',
     credentials: true,
 };
+const helmetOptions = {
+    crossOriginResourcePolicy: false,
+};
 
 app.use(cors(corsOptions));
-app.use(helmet());
+app.use(helmet(helmetOptions));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.static('public'));
 
 app.use((req, res, next) => {
     console.log(req.cookies);
