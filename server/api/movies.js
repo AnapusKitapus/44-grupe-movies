@@ -15,10 +15,13 @@ movies.get('/', async (req, res) => {
 });
 
 movies.post('/', async (req, res) => {
-    const { name, slug } = req.body;
+    const { name, slug, year, director, genre, duration, image, imageAlt } = req.body;
     try {
-        const insertQuery = `INSERT INTO movies (name, slug) VALUES (?, ?);`;
-        const [insertRes] = await connection.execute(insertQuery, [name, slug]);
+        const insertQuery = `INSERT INTO movies 
+            (name, slug, release_year, director, genre, duration, cover, cover_alt) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?);`;
+        const [insertRes] = await connection.execute(insertQuery, 
+            [name, slug, year, director, genre, duration, image, imageAlt]);
         
         if (insertRes.affectedRows === 1) {
             return res.status(201).json({msg: 'Movie created'});
